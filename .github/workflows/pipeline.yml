@@ -1,0 +1,91 @@
+name: Deployment CI/CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Stop PM2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            if pm2 describe motus-backend > /dev/null
+            then
+              pm2 delete motus-backend
+            else
+              echo "motus-backend does not exist"
+            fi
+            if pm2 describe motus-frontend > /dev/null
+            then
+              pm2 delete motus-frontend
+            else
+              echo "motus-frontend does not exist"
+            fi
+
+      - name: Send Files Boince
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.1
+        with:
+          username: ${{ secrets.USERNAME }}
+          server: ${{ secrets.SERVER }}
+          port: ${{ secrets.PORT }}
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          local_path: ./*
+          remote_path: /var/www/motus/
+          args: "-o ConnectTimeout=30"
+
+      - name: Start Postgres
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ../../var/www/motus/database/
+            docker compose down
+            docker compose up -d
+
+      - name: Start Backend
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ../../var/www/motus/backend/
+            rm -rf dist
+            npm install
+            npm run build
+            pm2 start npm --name "motus-backend" -- run start:prod
+            rm -rf src
+            rm -f tsconfig.json
+            rm -f tsconfig.build.json
+            rm -f nest-cli.json
+
+      - name: Start Frontend
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ../../var/www/motus/frontend/
+            rm -rf .next
+            npm install
+            npm run build
+            pm2 start npm --name "motus-frontend" -- run start
+            rm -rf src
+            rm -f tsconfig.json
