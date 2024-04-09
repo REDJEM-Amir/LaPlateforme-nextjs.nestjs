@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UserController } from './controller/user.controller';
 import { UserService } from './service/user.service';
 import { User } from './entities/user.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { User } from './entities/user.entity';
       ],
       synchronize: true,
     }),
+    AuthModule,
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [
