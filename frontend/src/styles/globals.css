@@ -6,6 +6,12 @@
   --CLR03: rgba(30, 67, 156, 1);
   --CLR04: rgba(237, 108, 52, 1);
   --CLR05: rgba(255, 255, 255, 1);
+
+  --CLR-White: rgb(240, 247, 246);
+  --CLR-Back: rgb(4, 23, 33);
+  --CLR-Case: rgb(199, 209, 214);
+  --CLR-Border: rgb(93, 108, 112);
+  --CLR-Police: rgb(4, 5, 5);
 }
 
 * {
@@ -23,14 +29,8 @@ body, html {
   width: 100vw;
   min-width: 100vw;
   max-width: 100vw;
-  background-color: var(--CLR01);
+  background-color: var(--CLR-Back);
   overflow-x: hidden;
-  overflow-y: scroll;
-}
-
-body::-webkit-scrollbar {
-  background-color: transparent;
-  width: 0.6vw;
 }
 
 body::-webkit-scrollbar-thumb {

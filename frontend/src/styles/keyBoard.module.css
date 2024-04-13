@@ -1,0 +1,48 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 2vw;
+    padding-left: 25vw;
+    padding-right: 25vw;
+    align-items: center;
+    gap: 0.5vw;
+    height: 100%;
+    width: 100%;
+}
+
+.rowOne {
+    position: relative;
+    display: flex; 
+    gap: 0.5vw;
+}
+
+.rowTwo {
+    position: relative;
+    display: flex;
+    gap: 0.5vw;
+}
+
+.rowThree {
+    position: relative;
+    display: flex;
+    gap: 0.5vw;
+}
+
+.contentKey {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4vw;
+    aspect-ratio: 1;
+    background-color: var(--CLR-Case);
+    border-radius: 100%;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    cursor: pointer;
+}
+
+.key {
+    position: relative;
+    font-size: 2vw;
+}

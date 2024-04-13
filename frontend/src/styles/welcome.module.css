@@ -1,0 +1,38 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.contentOne {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 65vh;
+}
+
+.contentRight {
+    position: relative;
+    width: 20vw;
+}
+
+.contentMid {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60vw;
+}
+
+.contentLeft {
+    position: relative;
+    width: 20vw;
+}
+
+.contentTwo {
+    position: relative;
+    background-color: var(--CLR-White);
+    height: 35vh;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}

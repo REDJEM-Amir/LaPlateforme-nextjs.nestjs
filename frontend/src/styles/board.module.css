@@ -1,0 +1,29 @@
+.container {
+    position: relative;
+    display: flex;
+    border: 1px solid var(--CLR-Border);
+    width: fit-content;
+    background: var(--CLR-Case);
+    border-radius: 5px;
+}
+
+.containerCase {
+    position: relative;
+    aspect-ratio: 1/1;
+    padding: 0.5vw;
+    padding-left: 0.8vw;
+    padding-right: 0.8vw;  
+    border: 1px solid var(--CLR-Border);
+}
+
+.content {
+    position: relative;
+    align-items: center;
+}
+
+.letter {
+    position: relative;
+    font-size: 2vw;
+    color: var(--CLR-Police);
+    font-weight: 800;
+}
