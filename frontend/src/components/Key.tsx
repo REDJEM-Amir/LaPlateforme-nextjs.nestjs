@@ -2,12 +2,14 @@ import React from 'react'
 import css from '@/styles/keyBoard.module.css';
 
 const Key = ({
-    label
+    label,
+    onClick
 }:{
-    label: string
+    label: string,
+    onClick: (key: string) => void
 }) => {
   return (
-    <div className={css.contentKey}>
+    <div className={css.contentKey} onClick={() => onClick(label)}>
         <div className={css.key}>{label}</div>
     </div>
   )
