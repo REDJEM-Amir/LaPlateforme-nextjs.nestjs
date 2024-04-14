@@ -1,24 +1,26 @@
 .container {
     position: relative;
     display: flex;
+    align-items: center;
     border: 1px solid var(--CLR-Border);
     width: fit-content;
     background: var(--CLR-Case);
-    border-radius: 5px;
+    border-radius: 3px;
+    border: 0.1vw solid var(--CLR-Border);
+    gap: 0.05vw;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.containerCase {
+.contentCase {
     position: relative;
+    display: flex;
+    justify-content: center;
+    width: 4vw;
     aspect-ratio: 1/1;
-    padding: 0.5vw;
-    padding-left: 0.8vw;
-    padding-right: 0.8vw;  
-    border: 1px solid var(--CLR-Border);
-}
-
-.content {
-    position: relative;
     align-items: center;
+    border-radius: 0.2vw;
+    border: 0.1vw solid var(--CLR-Border);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .letter {
