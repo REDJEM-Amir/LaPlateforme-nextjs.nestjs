@@ -1,6 +1,15 @@
 .container {
     position: relative;
     display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.containerWord {
+    position: relative;
+    display: flex;
     align-items: center;
     border: 1px solid var(--CLR-Border);
     width: fit-content;
@@ -28,4 +37,34 @@
     font-size: 2vw;
     color: var(--CLR-Police);
     font-weight: 800;
+}
+
+.containerAction {
+    position: relative;
+    display: flex;
+    gap: 1vw;
+}
+
+.contentIco {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--CLR-Border);
+    width: 4vw;
+    border-radius: 100%;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.contentIco:hover {
+    transition: 0.5s;
+    background-color: var(--CLR04);
+}
+
+.ico {
+    position: relative;
+    color: var(--CLR-White);
+    font-size: 2vw;
 }
