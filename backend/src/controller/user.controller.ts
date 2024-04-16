@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -10,6 +10,6 @@ export class UserController {
   @Get('/firstConnection')
   firstConnection(@Req() req) {
     const account = req.user.email;
-    return this.firstConnection(account);
+    return this.userService.firstConnection(account);
   }
 }
