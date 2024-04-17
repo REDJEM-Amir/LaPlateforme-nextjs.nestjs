@@ -1,0 +1,33 @@
+.container {
+    position: relative;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+.contentLogin {
+    position: relative;
+    font-size: 1.1vw;
+    font-weight: 700;
+    background-color: var(--CLR04);
+    padding: 1vw;
+    border-radius: 30px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.contentLogin:hover {
+    transition: 0.5s;
+    transform: scale(0.95);
+}
+
+.login {
+    color: white;
+}

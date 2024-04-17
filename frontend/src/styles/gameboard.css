@@ -1,0 +1,41 @@
+.game-board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.attempt {
+    display: flex;
+}
+
+.cell {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4vw;
+    height: 4vw;
+    border: 1px solid whitesmoke;
+    background-color: var(--CLR-Motus);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.cell.correct {
+    background-color: var(--CLR-Red);
+    z-index: 2;
+    border-radius: 5px;
+}
+
+.cell.wrong-place {
+    background-color: var(--CLR-Yellow);
+    z-index: 2;
+    border-radius: 50%; 
+}
+
+.cell.wrong {
+    background-color: var(--CLR-Blue);
+    z-index: 2;
+    color: white;
+}
