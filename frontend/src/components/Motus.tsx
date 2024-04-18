@@ -71,6 +71,12 @@ const Motus: React.FC = () => {
 
     const checkGuess = () => {
         const currentGuess: string = guesses[currentRow].map(gr => gr.letter).join('');
+
+        if (currentGuess.length < secretWord.length) {
+            alert("Vous devez remplir toutes les lettres avant de soumettre.");
+            return;
+        }
+        
         const letterCount = new Map();
         for (let char of secretWord) {
             letterCount.set(char, (letterCount.get(char) || 0) + 1);
