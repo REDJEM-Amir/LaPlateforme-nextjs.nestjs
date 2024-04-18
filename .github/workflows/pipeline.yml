@@ -7,6 +7,18 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env: 
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      AUTH_JWKURI: ${{ secrets.AUTH_JWKURI }}
+      AUTH_AUDIENCE: ${{ secrets.AUTH_AUDIENCE }}
+      AUTH_ISSUER: ${{ secrets.AUTH_ISSUER }}
+      AUTH0_SECRET: ${{ secrets.AUTH0_SECRET }}
+      AUTH0_BASE_URL: ${{ secrets.AUTH0_BASE_URL }}
+      AUTH0_ISSUER_BASE_URL: ${{ secrets.AUTH0_ISSUER_BASE_URL }}
+      AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+      AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
 
     steps:
       - name: Checkout code
@@ -52,9 +64,6 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
-            export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-            export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
             cd ../../var/www/motus/database/
             docker compose down
             docker compose up -d
@@ -67,12 +76,6 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
-            export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-            export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-            export AUTH_JWKURI=${{ secrets.AUTH_JWKURI }}
-            export AUTH_AUDIENCE=${{ secrets.AUTH_AUDIENCE }}
-            export AUTH_ISSUER=${{ secrets.AUTH_ISSUER }}
             cd ../../var/www/motus/backend/
             rm -rf dist
             npm install
@@ -91,11 +94,6 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            export AUTH0_SECRET=${{ secrets.AUTH0_SECRET }}
-            export AUTH0_BASE_URL=${{ secrets.AUTH0_BASE_URL }}
-            export AUTH0_ISSUER_BASE_URL=${{ secrets.AUTH0_ISSUER_BASE_URL }}
-            export AUTH0_CLIENT_ID=${{ secrets.AUTH0_CLIENT_ID }}
-            export AUTH0_CLIENT_SECRET=${{ secrets.AUTH0_CLIENT_SECRET }}
             cd ../../var/www/motus/frontend/
             rm -rf .next
             npm install
