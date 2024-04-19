@@ -30,7 +30,7 @@ export class StatsController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('/addPoints')
+  @Get('/removePoints')
   removePoints(@Req() req) {
     const email = req.user.email;
     if (email === undefined || email === null) {

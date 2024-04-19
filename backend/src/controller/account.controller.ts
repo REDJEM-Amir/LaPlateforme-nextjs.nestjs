@@ -9,7 +9,7 @@ export class AccountController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('/signup')
-  firstConnection(@Body() body: Record<string, any>, @Req() req) {
+  initializeUsername(@Body() body: Record<string, any>, @Req() req) {
     const { username } = body;
     const email = req.user.email;
     if (email === undefined || email === null) {
