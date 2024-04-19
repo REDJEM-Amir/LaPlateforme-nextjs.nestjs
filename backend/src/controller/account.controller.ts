@@ -3,12 +3,12 @@ import { AccountService } from '../service/account.service';
 import { AuthGuard } from '@nestjs/passport';
 import { response } from 'express';
 
-@Controller('api/account')
+@Controller()
 export class AccountController {
   constructor(private readonly accountService: AccountService) { }
 
   @UseGuards(AuthGuard('jwt'))
-  @Post('/signup')
+  @Post('api/account/signup')
   initializeUsername(@Body() body: Record<string, any>, @Req() req) {
     const { username } = body;
     const email = req.user.email;

@@ -3,12 +3,12 @@ import { AuthGuard } from '@nestjs/passport';
 import { response } from 'express';
 import { DifficultyService } from 'src/service/difficulty.service';
 
-@Controller('api/difficulty')
+@Controller()
 export class DifficultyController {
   constructor(private readonly difficultyService: DifficultyService) { }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('/find')
+  @Get('api/difficulty/find')
   difficultySummary(@Req() req) {
     const email = req.user.email;
     if (email === undefined || email === null) {

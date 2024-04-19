@@ -8,7 +8,7 @@ export async function GET() {
     if (!token) {
         return NextResponse.json({ error: 'Access token not found' }, { status: 401 });
     }
-    const response = await axios.get(`http://localhost:3334/api/stats/incrementLosses`, {
+    const response = await axios.get(`http://localhost:5556/api/stats/incrementLosses`, {
         headers: {
             Authorization: `Bearer ${token}`
         },

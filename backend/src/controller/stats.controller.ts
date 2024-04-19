@@ -3,12 +3,12 @@ import { StatsService } from '../service/stats.service';
 import { AuthGuard } from '@nestjs/passport';
 import { response } from 'express';
 
-@Controller('api/stats')
+@Controller()
 export class StatsController {
   constructor(private readonly statsService: StatsService) { }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('/findStats')
+  @Get('api/stats/findStats')
   findStats(@Req() req) {
     const email = req.user.email;
     if (email === undefined || email === null) {
@@ -19,7 +19,7 @@ export class StatsController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('/addPoints')
+  @Get('api/stats/addPoints')
   addPoints(@Req() req) {
     const email = req.user.email;
     if (email === undefined || email === null) {
@@ -30,7 +30,7 @@ export class StatsController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('/removePoints')
+  @Get('api/stats/removePoints')
   removePoints(@Req() req) {
     const email = req.user.email;
     if (email === undefined || email === null) {
@@ -41,7 +41,7 @@ export class StatsController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('/incrementWins')
+  @Get('api/stats/incrementWins')
   incrementWins(@Req() req) {
     const email = req.user.email;
     if (email === undefined || email === null) {
@@ -52,7 +52,7 @@ export class StatsController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('/incrementLosses')
+  @Get('api/stats/incrementLosses')
   incrementLosses(@Req() req) {
     const email = req.user.email;
     if (email === undefined || email === null) {
