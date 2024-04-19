@@ -6,20 +6,15 @@ import '@/styles/ranking.css';
 
 type Stats = {
     username: string;
-    score: number; // Assuming score is a number
+    score: number;
 }
 
 const Ranking = () => {
     const [data, setData] = useState<Stats[]>([]);
 
     const loadRanking = async () => {
-        try {
-            const response = await axios.get(`/api/stats/findStats`);
-            setData(response.data);
-            console.log(response.data)
-        } catch (error) {
-            console.error('Failed to fetch rankings:', error);
-        }
+        const response = await axios.get(`/api/stats/findStats`);
+        setData(response.data);
     }
 
     useEffect(() => {
@@ -32,7 +27,7 @@ const Ranking = () => {
                 <div className='title'>Classement</div>
             </div>
             {data.map((item, index) => (
-                <div key={index} className='contentPlayer'> {/* Added key to each child */}
+                <div key={index} className='contentPlayer'>
                     <div className='score'>{item.score}</div>
                 </div>
             ))}

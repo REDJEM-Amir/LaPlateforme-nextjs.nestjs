@@ -17,6 +17,7 @@ import { DifficultyService } from './service/difficulty.service';
 
 @Module({
   imports: [
+    AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }), 
@@ -37,7 +38,6 @@ import { DifficultyService } from './service/difficulty.service';
     TypeOrmModule.forFeature([Account]),
     TypeOrmModule.forFeature([Stats]),
     TypeOrmModule.forFeature([Difficulty]),
-    AuthModule,
   ],
   controllers: [
     AccountController,

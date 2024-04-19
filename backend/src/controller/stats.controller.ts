@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards, HttpStatus } from '@nestjs/common';
 import { StatsService } from '../service/stats.service';
 import { AuthGuard } from '@nestjs/passport';
 import { response } from 'express';
@@ -17,7 +17,7 @@ export class StatsController {
         return this.statsService.findStats();
     }
   }
-
+  
   @UseGuards(AuthGuard('jwt'))
   @Get('api/stats/addPoints')
   addPoints(@Req() req) {
