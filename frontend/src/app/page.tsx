@@ -1,5 +1,6 @@
 import LandingPage from "@/components/LandingPage";
 import Motus from "@/components/Motus";
+import Profile from "@/components/Profile";
 import Ranking from "@/components/Ranking";
 import css from "@/styles/page.module.css";
 
@@ -22,7 +23,7 @@ export default async function Page() {
           <Motus />
         </div>
         <div className={css.contentThree}>
-          
+          <Profile />
         </div>
       </div>
     );

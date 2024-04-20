@@ -22,4 +22,3 @@ export class Stats {
     @Column()
     difficulty: string = "Novice";
 }
-

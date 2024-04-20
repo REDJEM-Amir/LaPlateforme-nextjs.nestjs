@@ -16,9 +16,10 @@
     width: 4vw;
     height: 4vw;
     border: 1px solid whitesmoke;
-    background-color: var(--CLR-Motus);
+    background-color: #1e439c;
     color: white;
-    font-size: 20px;
+    font-size: 1.5vw;
+    border-radius: 0.6vw;
     font-weight: bold;
 }
 

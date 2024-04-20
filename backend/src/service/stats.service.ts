@@ -16,6 +16,22 @@ export class StatsService {
     private accountRepository: Repository<Account>
   ) { }
 
+  async findAllStatsByPlayer(email: string): Promise<any[]> {
+    return this.statsRepository
+      .createQueryBuilder("stats")
+      .leftJoinAndSelect("stats.account", "account")
+      .where("account.email = :email", { email })
+      .select([
+        "stats.id",
+        "stats.score",
+        "stats.wins",
+        "stats.losses",
+        "stats.difficulty",
+        "account.username"
+      ])
+      .getMany();
+  }
+
   async findStats(): Promise<any[]> {
     return this.statsRepository
       .createQueryBuilder("stats")
