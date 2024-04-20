@@ -1,0 +1,148 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.section {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: fit-content;
+    gap: 10px;
+    margin-left: 15vw;
+    margin-right: 15vw;
+}
+
+.contentText {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.text {
+    position: relative;
+    font-size: 2.7vw;
+    font-weight: 700;
+}
+
+.subText {
+    position: relative;
+    font-size: 1vw;
+    color: rgb(90, 90, 214);
+    padding-left: 3vw;
+}
+
+.section2 {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: fit-content;
+    gap: 5vw;
+    margin-left: 15vw;
+    margin-right: 15vw;
+}
+
+.contentText2 {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    padding-top: 5vw;
+    gap: 4vw;
+}
+
+.text2 {
+    position: relative;
+    font-size: 1.8vw;
+    font-weight: 700;
+}
+
+.subText2 {
+    position: relative;
+    font-size: 1vw;
+    color: rgb(187, 105, 224);
+    padding-left: 3vw;
+}
+
+.contentImg {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img {
+    position: relative;
+    width: 25vw;
+    border-radius: 8vw;
+}
+
+.section3 {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: fit-content;
+    gap: 10px;
+    padding-top: 3vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    padding-bottom: 4vw;
+}
+
+.text3 {
+    position: relative;
+    font-size: 1.5vw;
+    font-weight: 700;
+    text-align: center;
+}
+
+.contentCol {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 2vw;
+    padding-top: 1vw;
+}
+
+.col {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    width: 33%;
+}
+
+.contentColImg {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.colImg {
+    position: relative;
+    width: 15vw;
+    border-radius: 2vw;
+}
+
+.colTitle {
+    position: relative;
+    font-size: 1.1vw;
+    font-weight: 700;
+    text-align: center;
+}
+
+.colText {
+    position: relative;
+    font-size: 0.9vw;
+    font-weight: 400;
+}

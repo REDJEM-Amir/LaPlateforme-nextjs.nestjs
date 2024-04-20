@@ -16,8 +16,12 @@ export class StatsService {
     private accountRepository: Repository<Account>
   ) { }
 
-  async findStats(): Promise<Stats[]> {
-    return this.statsRepository.find();
+  async findStats(): Promise<any[]> {
+    return this.statsRepository
+      .createQueryBuilder("stats")
+      .leftJoinAndSelect("stats.account", "account")
+      .select(["account.username", "stats.score", "stats.difficulty"])
+      .getMany();
   }
 
   async addPoints(email: string, basePoints: number = 55) {

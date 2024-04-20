@@ -1,3 +1,4 @@
+import LandingPage from "@/components/LandingPage";
 import Motus from "@/components/Motus";
 import Ranking from "@/components/Ranking";
 import "@/styles/page.css";
@@ -8,13 +9,7 @@ export default async function Page() {
 
   if (!session || !session.user) {
     return (
-      <div className="containerInit">
-        <div className="contentLogin">
-          <a href="/api/auth/login">
-            <div className="login">Connecte toi pour jouer</div>
-          </a>
-        </div>
-      </div>
+      <LandingPage />
     );
   } else {
     return (
