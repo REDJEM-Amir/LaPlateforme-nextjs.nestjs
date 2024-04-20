@@ -146,3 +146,60 @@
     font-size: 0.9vw;
     font-weight: 400;
 }
+
+@media (max-width: 500px) {
+    .section {
+        margin-left: 5vw;
+        margin-right: 5vw;
+    }
+    .text {
+        font-size: 4vw;
+    }
+    .subText {
+        font-size: 2.5vw;
+        padding-left: 0;
+    }
+    .img {
+        width: 30vw;
+    }
+    .section2 {
+        margin-left: 5vw;
+        margin-right: 5vw;
+    }
+    .text2 {
+        font-size: 4vw;
+    }
+    .subText2 {
+        font-size: 2.5vw;
+        padding-left: 0;
+    }
+    .section3 {
+        margin-left: 5vw;
+        margin-right: 5vw;
+    }
+    .text3 {
+        font-size: 4vw;
+    }
+    .contentCol {
+        flex-direction: column;
+    }
+    .col {
+        flex-direction: row;
+        width: 100%;
+    }
+    .colImg {
+        width: 30vw;
+    }
+    .contentColText {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .colTitle {
+        font-size: 3vw;
+    }
+    .colText {
+        font-size: 2.2vw;
+    }
+}
