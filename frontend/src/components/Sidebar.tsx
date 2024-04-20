@@ -41,8 +41,8 @@ const Sidebar = async () => {
         return (
             <div className={css.container}>
                 <div className={css.contentLogo}>
-                    <FaGamepad className={css.logo} />
-                    <div className={css.textLogo}></div>
+                    <FaGamepad className={css.logo}/>
+                    <div className={css.textLogo}>Motus Game</div>
                 </div>
                 <Link href="/api/auth/logout" className={css.link}>
                     <div className={css.contentConnect}>

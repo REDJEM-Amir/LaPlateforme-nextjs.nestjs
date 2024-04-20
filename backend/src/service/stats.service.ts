@@ -21,6 +21,7 @@ export class StatsService {
       .createQueryBuilder("stats")
       .leftJoinAndSelect("stats.account", "account")
       .select(["account.username", "stats.score", "stats.difficulty"])
+      .orderBy("stats.score", "DESC")
       .getMany();
   }
 

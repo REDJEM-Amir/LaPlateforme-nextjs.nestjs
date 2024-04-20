@@ -1,7 +1,8 @@
 import LandingPage from "@/components/LandingPage";
 import Motus from "@/components/Motus";
 import Ranking from "@/components/Ranking";
-import "@/styles/page.css";
+import css from "@/styles/page.module.css";
+
 import { getSession } from "@auth0/nextjs-auth0";
 
 export default async function Page() {
@@ -13,15 +14,15 @@ export default async function Page() {
     );
   } else {
     return (
-      <div className="container">
-        <div className="contentOne">
+      <div className={css.containerGame}>
+        <div className={css.contentOne}>
           <Ranking />
         </div>
-        <div className="contentTwo">
+        <div className={css.contentTwo}>
           <Motus />
         </div>
-        <div className="contentThree">
-
+        <div className={css.contentThree}>
+          
         </div>
       </div>
     );
