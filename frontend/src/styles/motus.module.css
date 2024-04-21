@@ -76,3 +76,19 @@
     color: white;
     font-size: 1.5vw;
 }
+
+@media (max-width: 1024px) {
+    .contentStart {
+        padding: 2vw;
+        border-radius: 4vw;
+    }
+    .textStart {
+        font-size: 4vw;
+    }
+    .contentSubmit {
+        width: 7vw;
+    }
+    .submit {
+        font-size: 4vw;
+    }
+}

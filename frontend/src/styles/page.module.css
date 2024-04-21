@@ -29,3 +29,9 @@
     width: 25vw;
     padding-right: 10vw;
 }
+
+@media (max-width: 1024px) {
+    .containerGame {
+        align-items: start;
+    }
+}

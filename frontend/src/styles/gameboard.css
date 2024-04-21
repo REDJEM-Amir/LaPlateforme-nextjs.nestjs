@@ -40,3 +40,11 @@
     z-index: 2;
     color: white;
 }
+
+@media (max-width: 1024px) {
+    .cell {
+        width: 8vw;
+        height: 8vw;
+        font-size: 3.5vw;
+    }
+}

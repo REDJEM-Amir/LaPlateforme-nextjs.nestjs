@@ -49,3 +49,10 @@
 .item {
     font-size: 0.8vw;
 }
+
+@media (max-width: 1024px) {
+    .container {
+        display: none;
+        position: absolute;
+    }
+}
