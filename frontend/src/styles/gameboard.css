@@ -41,6 +41,14 @@
     color: white;
 }
 
+.hidden-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    width: 0;
+}
+
 @media (max-width: 1024px) {
     .cell {
         width: 8vw;
