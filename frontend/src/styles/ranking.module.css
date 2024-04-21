@@ -6,9 +6,9 @@
     justify-content: center;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 0.2vw;
-    background-color: rgb(237, 108, 52);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     border-radius: 1vw;
-    padding: 0.5vw;
+    padding: 0.8vw;
     width: 30vw;
     max-height: 20vw;
     overflow: hidden;
@@ -25,7 +25,7 @@
     position: relative;
     font-weight: 700;
     font-size: 1.5vw;
-    color: white;
+    color: black;
 }
 
 .contentPlayer {
@@ -64,7 +64,7 @@
 }
 
 .nameCol {
-    color: white;   
+    color: black;   
     font-size: 0.8vw;
 }
 
@@ -78,6 +78,8 @@
     background-color: white;
     border-radius: 3vw;
     padding: 0.7vw;
+    background-color: rgba(25, 117, 209, 0.1);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .column {

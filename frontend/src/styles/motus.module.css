@@ -1,0 +1,78 @@
+.containerMotus {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5vw;
+    gap: 2vw;
+    justify-content: center;
+}
+
+.contentForm {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 2vw;
+    border-radius: 2vw;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.from {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.contentStart {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.2vw solid rgba(54, 88, 168, 1);
+    padding: 1vw;
+    border-radius: 3vw;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.contentStart:hover {
+    transition: 0.5s;
+    background-color: rgba(54, 88, 168, 1);
+    .textStart {
+        color: white;
+    }
+}
+
+.textStart {
+    font-size: 1vw;
+    font-weight: 600;
+    color: rgba(54, 88, 168, 1);
+    transition: 0.5s;
+}
+
+.contentSubmit {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3vw;
+    height: auto;
+    background-color: var(--CLR04);
+    border-radius: 100%;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+    transition: 0.5s;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.contentSubmit:hover {
+    transition: 1s;
+    transform: rotate(360deg);
+}
+
+.submit {
+    position: relative;
+    color: white;
+    font-size: 1.5vw;
+}

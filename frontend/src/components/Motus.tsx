@@ -3,8 +3,11 @@
 import { useEffect, useState, useCallback } from "react";
 import GameBoard from "./GameBoard";
 import axios from "axios";
-import '@/styles/motus.css'
+import css from '@/styles/motus.module.css'
 import { HiArrowSmallUp } from "react-icons/hi2";
+import TextField from '@mui/material/TextField';
+import LoadingButton from '@mui/lab/LoadingButton';
+import CircularProgress from "@mui/material/CircularProgress";
 
 type GuessResult = {
     letter: string;
@@ -18,26 +21,42 @@ const Motus: React.FC = () => {
     const [guesses, setGuesses] = useState<Guess[]>([]);
     const [currentRow, setCurrentRow] = useState(0);
     const [currentCell, setCurrentCell] = useState(1);
+    const [firstConnect, setFirstConnect] = useState<boolean>();
+    const [username, setUsername] = useState<string>();
+    const [loadSubmit, setLoadSubmit] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        axios.get("https://trouve-mot.fr/api/random")
-            .then(response => {
-                const fetchedWord = response.data[0].name.toUpperCase();
-                setSecretWord(fetchedWord);
-                setGuesses(
-                    Array.from({ length: 6 }, () =>
-                        Array.from({ length: fetchedWord.length }, (_, index) => ({
-                            letter: index === 0 ? fetchedWord[0] : '',
-                            status: 'empty'
-                        }))
-                    )
-                );
-            })
-            .catch(error => {
-                console.error('Error fetching word:', error);
-                alert('Erreur lors de la récupération du mot');
-            });
-    }, []);
+        init();
+    });
+
+    const init = async () => {
+        const response = await axios.get('api/account/init')
+        console.log(response.data.status);
+        if (response.data.status == 200) {
+            setFirstConnect(true);
+            setIsLoading(false);
+        } else {
+            setFirstConnect(false);
+            setIsLoading(false);
+        }
+    }
+
+    const signup = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoadSubmit(true);
+        try {
+            const body = { username: username }
+            const response = await axios.post('api/account/signup', body);
+            console.log('signup', response.data.status);
+            if (response.data.status == 200) {
+                setFirstConnect(false);
+            }
+        } catch (error) {
+            console.error('Signup error:', error);
+        }
+        setLoadSubmit(false);
+    }
 
     const handleKeyPress = useCallback((key: string) => {
         if (key.match(/^[A-Za-z]$/) && currentCell < secretWord.length) {
@@ -60,6 +79,26 @@ const Motus: React.FC = () => {
         }
     }, [guesses, currentRow, currentCell, secretWord.length]);
 
+    const handleRandomApi = () => {
+        axios.get("https://trouve-mot.fr/api/random")
+            .then(response => {
+                const fetchedWord = response.data[0].name.toUpperCase();
+                setSecretWord(fetchedWord);
+                setGuesses(
+                    Array.from({ length: 6 }, () =>
+                        Array.from({ length: fetchedWord.length }, (_, index) => ({
+                            letter: index === 0 ? fetchedWord[0] : '',
+                            status: 'empty'
+                        }))
+                    )
+                );
+            })
+            .catch(error => {
+                console.error('Error fetching word:', error);
+                alert('Erreur lors de la récupération du mot');
+            });
+    }
+
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => handleKeyPress(e.key);
         window.addEventListener('keydown', handleKeyDown);
@@ -76,7 +115,7 @@ const Motus: React.FC = () => {
             alert("Vous devez remplir toutes les lettres avant de soumettre.");
             return;
         }
-        
+
         const letterCount = new Map();
         for (let char of secretWord) {
             letterCount.set(char, (letterCount.get(char) || 0) + 1);
@@ -114,13 +153,37 @@ const Motus: React.FC = () => {
     };
 
     return (
-        <div className="containerMotus">
-            <GameBoard guesses={guesses} />
-            <div
-                className="contentSubmit"
-                onClick={checkGuess}>
-                <HiArrowSmallUp className="submit" />
-            </div>
+        <div className={css.containerMotus}>
+            {isLoading ? (
+                <CircularProgress
+                    sx={{
+                        alignSelf: 'center',
+                    }} />
+            ) : (
+                firstConnect ? (
+                    <div className={css.contentForm}>
+                        <form className={css.from} onSubmit={signup}>
+                            <TextField label='Username' type='text' placeholder='Saisissez un surnom' onChange={(e) => setUsername(e.target.value)} required />
+                            <LoadingButton variant="outlined" type='submit' loading={loadSubmit}>
+                                Valider
+                            </LoadingButton>
+                        </form>
+                    </div>
+                ) : (
+                    guesses.length === 0 ? (
+                        <div className={css.contentStart} onClick={handleRandomApi}>
+                            <div className={css.textStart}>Play</div>
+                        </div>
+                    ) : (
+                        <>
+                            <GameBoard guesses={guesses} />
+                            <div className={css.contentSubmit} onClick={checkGuess}>
+                                <HiArrowSmallUp className={css.submit} />
+                            </div>
+                        </>
+                    )
+                )
+            )}
         </div>
     );
 };

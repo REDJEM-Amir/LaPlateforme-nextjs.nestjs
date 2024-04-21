@@ -2,6 +2,9 @@
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import css from '@/styles/profile.module.css';
+import { GrMoney } from 'react-icons/gr';
+import { GiTrophyCup } from 'react-icons/gi';
 
 type Account = {
     username: string;
@@ -28,19 +31,37 @@ const Profile = () => {
         load();
     }, [])
 
-  return (
-    <div className=''>
-        {data.map((item, index) => (
-            <div key={index} className=''>
-                <div className=''>{item.account.username}</div>
-                <div className=''>{item.score}</div>
-                <div className=''>{item.wins}</div>
-                <div className=''>{item.losses}</div>
-                <div className=''>{item.difficulty}</div>
+    return (
+        <div className={css.container}>
+            <div className={css.contentTitle}>
+                <div className={css.title}>Profile</div>
             </div>
-        ))}
-    </div>
-  )
+            {data.map((item, index) => (
+                <div key={index} className={css.content}>
+                    <div className={css.contentItem}>
+                        <div className={css.label}>Nom du joueur:</div>
+                        <div className={css.item}>{item.account.username}</div>
+                    </div>
+                    <div className={css.contentItem}>
+                        <div className={css.label}>Score:</div>
+                        <div className={css.item}>{item.score} <GrMoney /></div>
+                    </div>
+                    <div className={css.contentItem}>
+                        <div className={css.label}>Parties gagné:</div>
+                        <div className={css.item}>{item.wins}</div>
+                    </div>
+                    <div className={css.contentItem}>
+                        <div className={css.label}>Parties perdu:</div>
+                        <div className={css.item}>{item.losses}</div>
+                    </div>
+                    <div className={css.contentItem}>
+                        <div className={css.label}>Niveau:</div>
+                        <div className={css.item}>{item.difficulty} <GiTrophyCup /></div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    )
 }
 
 export default Profile

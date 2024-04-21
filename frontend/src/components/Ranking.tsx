@@ -24,7 +24,6 @@ const Ranking = () => {
     const loadRanking = async () => {
         const response = await axios.get(`/api/stats/findStats`);
         setData(response.data);
-        console.log(response.data)
     }
 
     useEffect(() => {

@@ -13,6 +13,15 @@ export class AccountService {
     private statsRepository: Repository<Stats>,
   ) { }
 
+  async init(email: string): Promise<any> {
+    const searchAccount = await this.accountsRepository.findOne({ where: { email } });
+    if (!searchAccount) {
+      return { status: 200, message: 'Un joueur est arrivé' };
+    } else {
+      return { status: 400, message: 'Compte existant' };
+    }
+  }
+
   async initializeUsername(email: string, username: string): Promise<any> {
     const searchAccount = await this.accountsRepository.findOne({ where: { email } });
     if (!searchAccount) {
