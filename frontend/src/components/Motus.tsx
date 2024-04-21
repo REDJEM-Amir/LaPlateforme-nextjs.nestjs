@@ -8,6 +8,9 @@ import { HiArrowSmallUp } from "react-icons/hi2";
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import CircularProgress from "@mui/material/CircularProgress";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import { AlertColor } from '@mui/material/Alert';
 
 type GuessResult = {
     letter: string;
@@ -15,6 +18,7 @@ type GuessResult = {
 };
 
 type Guess = GuessResult[];
+type SeverityType = AlertColor;
 
 const Motus: React.FC = () => {
     const [secretWord, setSecretWord] = useState<string>('');
@@ -25,6 +29,9 @@ const Motus: React.FC = () => {
     const [username, setUsername] = useState<string>();
     const [loadSubmit, setLoadSubmit] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [alertOpen, setAlertOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertSeverity, setAlertSeverity] = useState<SeverityType>('info');
 
     useEffect(() => {
         init();
@@ -32,7 +39,6 @@ const Motus: React.FC = () => {
 
     const init = async () => {
         const response = await axios.get('api/account/init')
-        console.log(response.data.status);
         if (response.data.status == 200) {
             setFirstConnect(true);
             setIsLoading(false);
@@ -48,7 +54,6 @@ const Motus: React.FC = () => {
         try {
             const body = { username: username }
             const response = await axios.post('api/account/signup', body);
-            console.log('signup', response.data.status);
             if (response.data.status == 200) {
                 setFirstConnect(false);
             }
@@ -94,8 +99,7 @@ const Motus: React.FC = () => {
                 );
             })
             .catch(error => {
-                console.error('Error fetching word:', error);
-                alert('Erreur lors de la récupération du mot');
+                handleAlert('Erreur lors de la récupération du mot', 'error');
             });
     }
 
@@ -108,11 +112,11 @@ const Motus: React.FC = () => {
         };
     }, [handleKeyPress]);
 
-    const checkGuess = () => {
+    const checkGuess = async () => {
         const currentGuess: string = guesses[currentRow].map(gr => gr.letter).join('');
 
         if (currentGuess.length < secretWord.length) {
-            alert("Vous devez remplir toutes les lettres avant de soumettre.");
+            handleAlert("Vous devez remplir toutes les lettres avant de soumettre.", 'warning');
             return;
         }
 
@@ -143,48 +147,65 @@ const Motus: React.FC = () => {
             return updatedGuesses;
         });
         if (result.every(r => r.status === 'correct')) {
-            alert('Félicitations! Vous avez deviné le mot!');
+            handleAlert('Félicitations! Vous avez deviné le mot!', 'success');
+            await axios.post('api/stats/modifyStats', { basePoints: 55, isWin: true });
+            handleRandomApi();
         } else if (currentRow < guesses.length - 1) {
             setCurrentRow(currentRow + 1);
             setCurrentCell(1);
         } else {
-            alert(`Dommage! Le mot était ${secretWord}.`);
+            handleAlert(`Dommage! Le mot était ${secretWord}.`, 'error');
+            await axios.post('api/stats/modifyStats', { basePoints: 35, isWin: false });
+            handleRandomApi();
         }
     };
 
+    const handleAlert = (message: string, severity: SeverityType) => {
+        setAlertMessage(message);
+        setAlertSeverity(severity);
+        setAlertOpen(true);
+    };
+
     return (
-        <div className={css.containerMotus}>
-            {isLoading ? (
-                <CircularProgress
-                    sx={{
-                        alignSelf: 'center',
-                    }} />
-            ) : (
-                firstConnect ? (
-                    <div className={css.contentForm}>
-                        <form className={css.from} onSubmit={signup}>
-                            <TextField label='Username' type='text' placeholder='Saisissez un surnom' onChange={(e) => setUsername(e.target.value)} required />
-                            <LoadingButton variant="outlined" type='submit' loading={loadSubmit}>
-                                Valider
-                            </LoadingButton>
-                        </form>
-                    </div>
+        <>
+            <div className={css.containerMotus}>
+                {isLoading ? (
+                    <CircularProgress
+                        sx={{
+                            alignSelf: 'center',
+                        }} />
                 ) : (
-                    guesses.length === 0 ? (
-                        <div className={css.contentStart} onClick={handleRandomApi}>
-                            <div className={css.textStart}>Play</div>
+                    firstConnect ? (
+                        <div className={css.contentForm}>
+                            <form className={css.from} onSubmit={signup}>
+                                <TextField label='Username' type='text' placeholder='Saisissez un surnom' onChange={(e) => setUsername(e.target.value)} required />
+                                <LoadingButton variant="outlined" type='submit' loading={loadSubmit}>
+                                    Valider
+                                </LoadingButton>
+                            </form>
                         </div>
                     ) : (
-                        <>
-                            <GameBoard guesses={guesses} />
-                            <div className={css.contentSubmit} onClick={checkGuess}>
-                                <HiArrowSmallUp className={css.submit} />
+                        guesses.length === 0 ? (
+                            <div className={css.contentStart} onClick={handleRandomApi}>
+                                <div className={css.textStart}>Play</div>
                             </div>
-                        </>
+                        ) : (
+                            <>
+                                <GameBoard guesses={guesses} />
+                                <div className={css.contentSubmit} onClick={checkGuess}>
+                                    <HiArrowSmallUp className={css.submit} />
+                                </div>
+                            </>
+                        )
                     )
-                )
-            )}
-        </div>
+                )}
+            </div>
+            <Snackbar open={alertOpen} autoHideDuration={6000} onClose={() => setAlertOpen(false)}>
+                <Alert onClose={() => setAlertOpen(false)} severity={alertSeverity} sx={{ width: '100%' }}>
+                    {alertMessage}
+                </Alert>
+            </Snackbar>
+        </>
     );
 };
 

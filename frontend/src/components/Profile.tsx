@@ -24,7 +24,6 @@ const Profile = () => {
     const load = async () => {
         const response = await axios.get(`/api/stats/findAllStatsByPlayer`);
         setData(response.data);
-        console.log(response.data)
     }
 
     useEffect(() => {

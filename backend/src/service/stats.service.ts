@@ -41,24 +41,31 @@ export class StatsService {
       .getMany();
   }
 
-  async addPoints(email: string, basePoints: number = 55) {
+  async modifyStats(email: string, basePoints: number, isWin: boolean) {
     const stats = await this.statsRepository.findOne({ where: { account: { email } } });
     if (stats) {
-      const pointsToAdd = this.calculatePoints(basePoints, stats.difficulty, true);
-      stats.score += pointsToAdd;
+      const factor = this.calculateFactor(stats.difficulty, isWin);
+      const pointsChange = Math.round(basePoints * factor);
+      stats.score += isWin ? pointsChange : -Math.min(stats.score, pointsChange);
+      stats.wins += isWin ? 1 : 0;
+      stats.losses += isWin ? 0 : 1;
       this.updateDifficulty(stats);
       await this.statsRepository.save(stats);
     }
   }
 
-  async removePoints(email: string, basePoints: number = 75) {
-    const stats = await this.statsRepository.findOne({ where: { account: { email } } });
-    if (stats) {
-      const pointsToRemove = this.calculatePoints(basePoints, stats.difficulty, false);
-      stats.score = Math.max(0, stats.score - pointsToRemove);
-      this.updateDifficulty(stats);
-      await this.statsRepository.save(stats);
+  calculateFactor(difficulty: string, isWin: boolean): number {
+    const factors = {
+      'Novice': 1.0,
+      'Lexicographe': 1.2,
+      'Maître des Mots': 1.5,
+      'Virtuose du Vocabulaire': 2.0
+    };
+    let factor = factors[difficulty] || 1.0;
+    if (!isWin) {
+      factor *= 1.5;
     }
+    return factor;
   }
 
   async updateDifficulty(stats: Stats) {
@@ -67,46 +74,6 @@ export class StatsService {
     if (currentDifficulty && stats.difficulty !== currentDifficulty.difficultyName) {
       stats.difficulty = currentDifficulty.difficultyName;
     }
-  }
-
-  async incrementWins(email: string) {
-    const stats = await this.statsRepository.findOne({ where: { account: { email } } });
-    if (stats) {
-      stats.wins += 1;
-      await this.statsRepository.save(stats);
-    }
-  }
-
-  async incrementLosses(email: string) {
-    const stats = await this.statsRepository.findOne({ where: { account: { email } } });
-    if (stats) {
-      stats.losses += 1;
-      await this.statsRepository.save(stats);
-    }
-  }
-
-  calculatePoints(basePoints: number, difficulty: string, isAdding: boolean): number {
-    let factor = 1;
-    switch (difficulty) {
-      case 'Novice':
-        factor = 1.0;
-        break;
-      case 'Lexicographe':
-        factor = 1.2;
-        break;
-      case 'Maître des Mots':
-        factor = 1.5;
-        break;
-      case 'Virtuose du Vocabulaire':
-        factor = 2.0;
-        break;
-      default:
-        factor = 1.0;
-    }
-    if (!isAdding) {
-      factor *= 1.5;
-    }
-    return Math.round(basePoints * factor);
   }
 
   async seed() {
@@ -120,25 +87,14 @@ export class StatsService {
     ];
 
     for (const data of statsData) {
-      let account = await this.accountRepository.findOne({
-        where: { username: data.username }
-      });
-
+      let account = await this.accountRepository.findOne({ where: { username: data.username } });
       if (!account) {
         account = this.accountRepository.create({ username: data.username, email: `${data.username}@example.com` });
         await this.accountRepository.save(account);
       }
 
-      let stats = await this.statsRepository.findOne({
-        where: { account: account }
-      });
-
-      if (stats) {
-        stats.score = data.score;
-        stats.wins = data.wins;
-        stats.losses = data.losses;
-        stats.difficulty = data.difficulty;
-      } else {
+      let stats = await this.statsRepository.findOne({ where: { account: account } });
+      if (!stats) {
         stats = this.statsRepository.create({
           account: account,
           score: data.score,
@@ -146,8 +102,12 @@ export class StatsService {
           losses: data.losses,
           difficulty: data.difficulty
         });
+      } else {
+        stats.score = data.score;
+        stats.wins = data.wins;
+        stats.losses = data.losses;
+        stats.difficulty = data.difficulty;
       }
-
       await this.statsRepository.save(stats);
     }
   }
