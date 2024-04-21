@@ -32,6 +32,26 @@
 
 @media (max-width: 1024px) {
     .containerGame {
-        align-items: start;
+        flex-direction: column;
+        justify-content: center;
+        height: auto;
+    }
+    .contentOne {
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding-left: 0;
+    }
+    .contentTwo {
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    .contentThree {
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 5vw;
+        width: 100%;
+        padding-right: 0;
     }
 }

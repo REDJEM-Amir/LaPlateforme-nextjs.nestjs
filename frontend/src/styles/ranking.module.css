@@ -99,7 +99,18 @@
 
 @media (max-width: 1024px) {
     .container {
-        display: none;
-        position: absolute;
+        align-self: center;
+        width: 95%;
+        max-height: 30vw;
+        aspect-ratio: initial;
+    }
+    .title {
+        font-size: 3.5vw;
+    }
+    .nameCol {
+        font-size: 2vw;
+    }
+    .item {
+        font-size: 2vw;
     }
 }
