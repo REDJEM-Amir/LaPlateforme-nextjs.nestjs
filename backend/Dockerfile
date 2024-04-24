@@ -1,4 +1,7 @@
-FROM node:16-alpine as builder
+#
+# 🏡 Production Build
+#
+FROM node:18
 
 WORKDIR /usr/src/app
 
@@ -10,14 +13,6 @@ COPY . .
 
 RUN npm run build
 
-FROM node:16-alpine
-
-WORKDIR /usr/src/app
-
-COPY --from=builder /usr/src/app/node_modules ./node_modules
-
-COPY --from=builder /usr/src/app/dist ./dist
-
 EXPOSE 5556
 
-CMD ["node", "dist/main"]
+CMD ["npm", "run", "start:prod"]
