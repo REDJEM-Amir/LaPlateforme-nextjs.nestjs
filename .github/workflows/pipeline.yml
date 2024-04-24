@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: .backend/Dockerfile
+          file: ./backend/Dockerfile
           push: true
           tags: ghcr.io/redjem-amir/motus-backend:latest
       
@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: .frontend/Dockerfile
+          file: ./frontend/Dockerfile
           push: true
           tags: ghcr.io/redjem-amir/motus-frontend:latest
 
@@ -41,7 +41,7 @@ jobs:
           server: ${{ secrets.SERVER }}
           port: ${{ secrets.PORT }}
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          local_path: .docker/docker-compose.yml
+          local_path: ./docker/docker-compose.yml
           remote_path: /var/www/motus
           args: '-o ConnectTimeout=30' 
 
