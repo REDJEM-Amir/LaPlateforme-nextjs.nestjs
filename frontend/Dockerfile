@@ -1,19 +1,25 @@
 #
 # 🏡 Production Build
 #
-FROM node:21.7.3-alpine
+FROM node:alpine as builder
 
 WORKDIR /app
 
-COPY . .
-
+COPY package*.json ./
 RUN npm install
+
+COPY . .
 
 RUN npm run build
 
-RUN rm -rf src
-RUN rm -f tsconfig.json
+FROM node:alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/node_modules ./node_modules
 
 EXPOSE 5555
 
-CMD ["npm","run", "start"]
+CMD ["npm", "run", "start"]

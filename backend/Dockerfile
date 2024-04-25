@@ -1,16 +1,24 @@
 #
 # 🏡 Production Build
 #
-FROM node:latest
+FROM node:alpine as builder
 
 WORKDIR /app
 
-COPY . . 
-
+COPY package*.json ./
 RUN npm install
+
+COPY . .
 
 RUN npm run build
 
-CMD ["npm", "run", "start:prod"]
+FROM node:alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
 
 EXPOSE 5556
+
+CMD ["node", "dist/main"]
