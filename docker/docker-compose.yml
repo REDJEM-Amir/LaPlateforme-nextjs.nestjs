@@ -12,8 +12,6 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: always
-  volumes:
-    postgres_data:
   motus-backend:
     image: ghcr.io/redjem-amir/motus/backend:1.0
     ports:
@@ -37,3 +35,5 @@ services:
       AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
       AUTH0_CLIENT_SECRET: ${AUTH0_CLIENT_SECRET}
     restart: always
+volumes:
+  postgres_data:
