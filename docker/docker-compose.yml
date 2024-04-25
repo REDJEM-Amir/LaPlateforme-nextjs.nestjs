@@ -15,7 +15,7 @@ services:
   volumes:
     postgres_data:
   motus-backend:
-    image: ghcr.io/redjem-amir/laplateforme-nextjs.nestjs/backend:latest
+    image: ghcr.io/redjem-amir/laplateforme-nextjs.nestjs/backend:1.0
     ports:
       - "5556:5556"
     environment:
@@ -27,7 +27,7 @@ services:
       AUTH_ISSUER: ${AUTH_ISSUER}
     restart: always
   motus-frontend:
-    image: ghcr.io/redjem-amir/laplateforme-nextjs.nestjs/frontend:latest
+    image: ghcr.io/redjem-amir/laplateforme-nextjs.nestjs/frontend:1.0
     ports:
       - "5555:5555"
     environment:
