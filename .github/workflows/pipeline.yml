@@ -31,15 +31,15 @@ jobs:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
-          tags: ghcr.io/redjem-amir/motus-backend:latest
+          tags: ghcr.io/redjem-amir/laplateforme-nextjs.nestjs/backend:latest
       
       - name: Build and push FrontEnd
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
-          file: /frontend/Dockerfile
+          file: ./frontend/Dockerfile
           push: true
-          tags: ghcr.io/redjem-amir/motus-frontend:latest
+          tags: ghcr.io/redjem-amir/laplateforme-nextjs.nestjs/frontend:latest
 
       - name: Send docker-compose
         uses: wlixcc/SFTP-Deploy-Action@v1.2.1
