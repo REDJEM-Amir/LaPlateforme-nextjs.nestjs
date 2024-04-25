@@ -72,7 +72,15 @@ jobs:
             export AUTH0_ISSUER_BASE_URL=${{ secrets.AUTH0_ISSUER_BASE_URL }}
             export AUTH0_CLIENT_ID=${{ secrets.AUTH0_CLIENT_ID }}
             export AUTH0_CLIENT_SECRET=${{ secrets.AUTH0_CLIENT_SECRET }}
-            docker-compose down
-            docker login ghcr.io -u redjem-amir -p '${{ secrets.GITHUB_TOKEN }}'
-            docker-compose pull
-            docker-compose up -d
+            if docker ps -f "name=postgres" -f "status=running" | grep -q '5432->5432'; then
+              echo "PostgreSQL container is already running. Setting up the new database if not exists..."
+              docker exec postgres psql -U ${POSTGRES_USER} -c "SELECT 1 FROM pg_database WHERE datname = '${POSTGRES_DB}'" | grep -q 1 || docker exec postgres psql -U ${POSTGRES_USER} -c "CREATE DATABASE ${POSTGRES_DB}"
+              echo "Starting or restarting other services..."
+              docker-compose up -d motus-backend motus-frontend
+            else
+              echo "PostgreSQL container is not running. Starting all services..."
+              docker login ghcr.io -u redjem-amir -p '${{ secrets.GITHUB_TOKEN }}'
+              docker-compose down
+              docker-compose pull
+              docker-compose up -d
+            fi
