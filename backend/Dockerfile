@@ -1,20 +1,16 @@
 #
 # 🏡 Production Build
 #
-FROM node:18
+FROM node:latest
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY . . 
 
 RUN npm install
 
-COPY . . 
-
 RUN npm run build
 
-RUN rm -rf src
+CMD ["npm", "run", "start:prod"]
 
 EXPOSE 5556
-
-CMD ["npm", "run", "start:prod"]
