@@ -73,5 +73,6 @@ jobs:
             export AUTH0_CLIENT_ID=${{ secrets.AUTH0_CLIENT_ID }}
             export AUTH0_CLIENT_SECRET=${{ secrets.AUTH0_CLIENT_SECRET }}
             docker-compose down
+            docker login ghcr.io -u redjem-amir -p '${{ secrets.GITHUB_TOKEN }}'
             docker-compose pull
             docker-compose up -d
