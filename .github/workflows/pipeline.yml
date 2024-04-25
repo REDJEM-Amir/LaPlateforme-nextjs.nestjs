@@ -31,7 +31,7 @@ jobs:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
-          tags: ghcr.io/redjem-amir/laplateforme-nextjs.nestjs/backend:1.0
+          tags: ghcr.io/redjem-amir/motus/backend:1.0
       
       - name: Build and push FrontEnd
         uses: docker/build-push-action@v5
@@ -39,7 +39,7 @@ jobs:
           context: ./frontend
           file: ./frontend/Dockerfile
           push: true
-          tags: ghcr.io/redjem-amir/laplateforme-nextjs.nestjs/frontend:1.0
+          tags: ghcr.io/redjem-amir/motus/frontend:1.0
 
       - name: Send docker-compose
         uses: wlixcc/SFTP-Deploy-Action@v1.2.1
@@ -60,7 +60,7 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /var/www/motus/database
+            cd /var/www/motus
             export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
             export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
             export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
@@ -74,4 +74,4 @@ jobs:
             export AUTH0_CLIENT_SECRET=${{ secrets.AUTH0_CLIENT_SECRET }}
             docker-compose down
             docker-compose pull
-            docker-compose up -d --build --force-recreate
+            docker-compose up -d
