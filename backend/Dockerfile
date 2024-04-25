@@ -1,22 +1,19 @@
 #
 # 🏡 Production Build
 #
-FROM node:21.7.3-alpine
+FROM node:18
 
 WORKDIR /app
 
-COPY . .
-
-RUN npm install -g @nestjs/cli
+COPY package*.json ./
 
 RUN npm install
+
+COPY . . 
 
 RUN npm run build
 
 RUN rm -rf src
-RUN rm -f tsconfig.json
-RUN rm -f tsconfig.build.json
-RUN rm -f nest-cli.json
 
 EXPOSE 5556
 
