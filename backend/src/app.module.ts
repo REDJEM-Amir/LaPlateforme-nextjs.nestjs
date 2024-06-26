@@ -24,7 +24,7 @@ import { DifficultyService } from './service/difficulty.service';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'motus-db',
-      port: 5434,
+      port: 5432,
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
@@ -35,9 +35,11 @@ import { DifficultyService } from './service/difficulty.service';
       ],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Account]),
-    TypeOrmModule.forFeature([Stats]),
-    TypeOrmModule.forFeature([Difficulty]),
+    TypeOrmModule.forFeature([
+      Account,
+      Stats,
+      Difficulty
+    ])
   ],
   controllers: [
     AccountController,
