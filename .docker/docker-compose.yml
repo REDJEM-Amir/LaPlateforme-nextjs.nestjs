@@ -1,19 +1,19 @@
 version: '3.8'
 services:
-  motus-database:
+  motus-db:
     image: postgres:latest
-    container_name: postgres
+    container_name: motus-db
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: always
   motus-backend:
-    image: ghcr.io/redjem-amir/motus/backend:1.0
+    image: ghcr.io/redjem-amir/motus/backend:latest
     ports:
       - "5556:5556"
     environment:
@@ -23,9 +23,11 @@ services:
       AUTH_JWKURI: ${AUTH_JWKURI}
       AUTH_AUDIENCE: ${AUTH_AUDIENCE}
       AUTH_ISSUER: ${AUTH_ISSUER}
+    depends_on: 
+      - motus-db
     restart: always
   motus-frontend:
-    image: ghcr.io/redjem-amir/motus/frontend:1.0
+    image: ghcr.io/redjem-amir/motus/frontend:latest
     ports:
       - "5555:5555"
     environment:
